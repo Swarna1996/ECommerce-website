@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from .models import Product
+from .models import Product,Category
 from django.contrib.auth import authenticate,login,logout
 from django.contrib import messages
 from django.contrib.auth.models import User
@@ -8,6 +8,20 @@ from .forms import SignUpForm
 from django import forms
 
 # Create your views here.
+
+def category(request,foo):
+    #replace "-" with spaces 
+    #"http://127.0.0.1:8000/category/programming-books" url is like this
+    foo = foo.replace('-',' ')
+    #grap the category from the url
+    try:
+        category = Category.objects.get(name = foo)
+        products = Product.objects.filter(category=category)
+        return render(request,'category.html',{'products':products, 'category' : category})
+    except:
+        messages.error(request,("Category doesn't exist"))
+        return redirect('home')
+
 def product(request,pk):
     product = Product.objects.get(id=pk)
     return render(request,'product.html',{'product':product})
