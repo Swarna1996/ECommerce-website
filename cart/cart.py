@@ -1,3 +1,5 @@
+from store.models import Product
+
 class Cart():
     def __init__(self,request):
         self.session = request.session
@@ -24,6 +26,16 @@ class Cart():
 
         self.session.modified = True
 
-
+    #To count how many items in out cart
     def __len__(self):
 	    return len(self.cart)
+    
+    
+    def get_prods(self):
+         #Get ids from cart
+         product_ids = self.cart.keys()
+         #Use ids to lookup products in database model
+         products = Product.objects.filter(id__in=product_ids) #"__in" A lookup expression provided by Django ORM, which means “check if the field value is in a given list/iterable.”
+
+         return products
+
