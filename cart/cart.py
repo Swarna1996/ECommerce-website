@@ -5,13 +5,14 @@ class Cart():
         self.session = request.session
 
         #Get the current session key if it exists
+        #Every Django request has a session object, which behaves like a Python dictionary.
         cart = self.session.get('session_key')
 
         #if the user is new, no session key! create one
         if 'session_key' not in request.session:
             cart = self.session['session_key'] = {}
 
-        #Make sure cart is available on all pages of the site
+        #Now, self.cart is accessible in other methods of this Cart class.
         self.cart = cart
 
     
@@ -44,4 +45,19 @@ class Cart():
     def get_quants(self):
          quantities = self.cart
          return quantities
+    
+    def update(self, product, quantity):
+         product_id = str(product)
+         product_qty = int(quantity)
+         
+         ourcart = self.cart
+         ourcart[product_id] = product_qty
+
+         self.session.modified = True
+
+         thing = self.cart
+         return thing
+         
+         
+         
 
