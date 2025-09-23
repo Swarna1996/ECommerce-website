@@ -15,14 +15,15 @@ class Cart():
         self.cart = cart
 
     
-    def add(self,product):
+    def add(self,product,quantity):
         product_id = str(product.id)
+        product_qty =str(quantity)
 
         #logic
         if product_id in self.cart:
             pass
         else:
-            self.cart[product_id] = {'price' : str(product.price)}
+            self.cart[product_id] = int(product_qty)
 
         self.session.modified = True
 
@@ -35,7 +36,12 @@ class Cart():
          #Get ids from cart
          product_ids = self.cart.keys()
          #Use ids to lookup products in database model
-         products = Product.objects.filter(id__in=product_ids) #"__in" A lookup expression provided by Django ORM, which means “check if the field value is in a given list/iterable.”
+         products = Product.objects.filter(id__in=product_ids) 
+         #"__in" A lookup expression provided by Django ORM, which means “check if the field value is in a given list/iterable.”
 
          return products
+    
+    def get_quants(self):
+         quantities = self.cart
+         return quantities
 
