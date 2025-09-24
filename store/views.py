@@ -9,6 +9,10 @@ from django import forms
 
 # Create your views here.
 
+def category_summary(request):
+    categories = Category.objects.all()
+    return render(request,'category_summary.html',{'categories':categories})
+
 def category(request,foo):
     #replace "-" with spaces 
     #"http://127.0.0.1:8000/category/programming-books" url is like this
