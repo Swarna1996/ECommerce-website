@@ -17,7 +17,8 @@
                     <form method="POST" action="{% url 'update_user' %}">
                         {% csrf_token %}
 
-                        {{ user_form.as_p}}
+                        {{ user_form.as_p}} 
+                        {% comment %} This method tells Django to render each form field wrapped in <p> tags. {% endcomment %}
                         <br/>
                         <button type="submit" class="btn btn-secondary">
                             Update Profile
@@ -28,6 +29,9 @@
                         <br/>
                         
                     </form>
+                    <br/><br/>
+                    <a href="{% url 'update_password' %}" class="btn btn-success">Update Password</a>
+
                 </div>
                     <br/>
                     <br/>
